@@ -1,4 +1,4 @@
-package com.searchmed.core.database
+package com.searchmed.core.network.database
 
 import okhttp3.Interceptor
 import okhttp3.Response

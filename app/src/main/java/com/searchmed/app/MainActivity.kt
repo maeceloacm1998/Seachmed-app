@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.searchmed.core.R
-import com.searchmed.core.database.PlaceRepository
-import com.searchmed.core.di.CoreDependencyInjectionModule
+import com.searchmed.core.network.di.NetworkDependencyInjectionModule
+import com.searchmed.core.network.di.RetrofitDependencyInjectionModule
+import com.searchmed.core.network.repository.PlaceRepository
 import com.searchmed.core.utils.KoinUtils
 import com.searchmed.core.utils.KoinUtils.addModules
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         startKoin()
         lifecycleScope.launch {
            runCatching {
-               repository.getHospitals()
+               repository.autoCompleteAddress("rua hildebrando de oliveira, 235")
            }.onFailure { 
                Log.e("ERROR", it.message.toString())
            }
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private fun startKoin() {
         KoinUtils.createInstance(applicationContext)
 
-        addModules(*CoreDependencyInjectionModule.modules)
+        addModules(*RetrofitDependencyInjectionModule.modules)
+        addModules(*NetworkDependencyInjectionModule.modules)
     }
 }
