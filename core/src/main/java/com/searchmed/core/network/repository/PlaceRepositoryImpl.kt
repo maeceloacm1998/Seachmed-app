@@ -3,6 +3,7 @@ package com.searchmed.core.network.repository
 import com.searchmed.core.network.database.PlaceApi
 import com.searchmed.core.network.models.Address
 import com.searchmed.core.network.models.AutoCompleteAddressResponseDTO
+import com.searchmed.core.network.models.HospitalDetailsResponseDTO
 import com.searchmed.core.network.models.PlaceHospitalResponseDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,5 +21,13 @@ class PlaceRepositoryImpl(private val placeApi: PlaceApi) : PlaceRepository {
             placeApi.autoCompleteAddress(Address(address))
         }
         return res.body()
+    }
+
+    override suspend fun getHospitalDetail(placeId: String): HospitalDetailsResponseDTO? {
+        val res = withContext(Dispatchers.IO) {
+            placeApi.getHospitalDetail(placeId)
+        }
+
+        return res.body()?.result
     }
 }

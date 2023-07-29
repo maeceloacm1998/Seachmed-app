@@ -7,5 +7,5 @@ data class ResponseModel<T>(
         val status: String,
 
         @SerializedName("result")
-        val result: List<T>,
+        val result: T,
 )
